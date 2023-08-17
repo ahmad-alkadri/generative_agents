@@ -1,31 +1,29 @@
 
 
-# Generative Agents with configurable LLM
+# Generative Agents with Llama2
 
 <p align="center" width="100%">
 <img src="cover.png" alt="Smallville" style="width: 80%; min-width: 300px; display: block; margin: auto;">
 </p>
 
-This is a fork of the repository that accompanies the research paper titled "[Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)." 
+This is a fork of the repository that accompanies the research paper titled "Generative Agents: Interactive Simulacra of Human Behavior." The original repo was default configured for OpenAI, but using a hosted API can be [costly](https://twitter.com/NickADobos/status/1690790151503724544?s=20). This fork configures the simulation to run locally with various open source LLMs. A few frameworks (llama.cpp, ollama.ai, gpt4all) make it easy to run open source LLMs locally and I integrated with all 3 of these frameworks for flexible local sim testing across a range of open source LLMs (some options shown below):
 
-The configures the generate agents simulation to run with various LLMs.
-
-In particular, using a local open source model, such as Llama2, has benefit given [the high cost of running simulations](https://twitter.com/NickADobos/status/1690790151503724544?s=20).
+![oss_llm](https://github.com/rlancemartin/generative_agents/assets/122662504/be4d142f-a4f1-4819-ae7b-628e28207fc6)
 
 ## <img src="https://joonsungpark.s3.amazonaws.com:443/static/assets/characters/profile/Isabella_Rodriguez.png" alt="Generative Isabella">   Setting Up the Environment 
 
-### Step 1. To run simulation locally, select an open source LLM of interest
-I use [Ollama](https://ollama.ai) for easy / quick setup:
-* [Download](https://ollama.ai/download)
-* Fetch a model, e.g., for `Llama-13b` run `ollama pull llama2:13b`
-* The code uses [LangChain's integration](https://python.langchain.com/docs/integrations/llms/ollama) for easy model-swapping
- 
-LlamaCpp or GPT4All are other great options: 
-* Follow the steps linked [here](https://python.langchain.com/docs/use_cases/question_answering/how_to/local_retrieval_qa) for LangChain's integration
+### Step 1. To run locally, select an open source LLM of interest
+
+[Ollama](https://python.langchain.com/docs/integrations/llms/ollama) is one option for easy / quick setup:
+
+* [Download the app](https://ollama.ai/download)
+* Fetch a model, e.g., for Llama-13b: `$ ollama pull llama2:13b`
+
+[LlamaCpp](https://github.com/ggerganov/llama.cpp) or [GPT4All](https://gpt4all.io/index.html) are also great options [see notes on setup here](https://python.langchain.com/docs/use_cases/question_answering/how_to/local_retrieval_qa).
 
 The LLM is set at the top of `gpt_structure.py`.
 
-The rest of the steps follow what was mentioned in the origional repo:
+The rest of the steps follow the original repo, except you don't need to supply an API key if running an LLM locally:
 
 ### Step 2. Generate Utils File
 In the `reverie/backend_server` folder (where `reverie.py` is located), create a new file titled `utils.py` and copy and paste the content below into the file:
@@ -46,9 +44,12 @@ collision_block_id = "32125"
 debug = True
 ```
 
-Suppply API keys for LLMs you want to test.
+LangChain's LLM integration make it east to test different options.
 
-Of course, for Llama2 or other OSS models running locally, you will not need a key.
+Supply API keys for LLMs you want to test that require them.
+ 
+Of course, for Llama2 or other open source models running locally, you will not need a key.
+
 ```
 # Copy and paste any API Keys for LLMs you want to test
 openai_api_key = "<Your OpenAI API>"
@@ -57,7 +58,7 @@ etc
 ```
  
 ### Step 3. Install requirements.txt
-Install everything listed in the `requirements.txt` file (I strongly recommend first setting up a virtualenv as usual). A note on Python version: we tested our environment on Python 3.9.12. 
+Install everything listed in the `requirements.txt` file (w/ up a virtualenv as usual). A note on Python version: we tested our environment on Python 3.9.12. 
 
 ## <img src="https://joonsungpark.s3.amazonaws.com:443/static/assets/characters/profile/Klaus_Mueller.png" alt="Generative Klaus">   Running a Simulation 
 To run a new simulation, you will need to concurrently start two servers: the environment server and the agent simulation server.
