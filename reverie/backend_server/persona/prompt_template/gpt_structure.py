@@ -65,8 +65,11 @@ llm = Ollama(base_url="http://localhost:11434",
 '''
 
 ### *** Ollama (Llama2-13b) *** 
+## To be able to run this, we need to make sure the Ollama is already up and running in the background.
+## Simply run the Ollama using 'ollama serve' and usually it'll be enough (make sure you've downloaded)
+## the model chosen below though
 llm = Ollama(base_url="http://localhost:11434",
-              model="llama2:13b",
+              model="llama2",
               callback_manager = CallbackManager([StreamingStdOutCallbackHandler()]))
 
 def temp_sleep(seconds=0.1):
