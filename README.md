@@ -1,21 +1,35 @@
 
 
-# Generative Agents: Interactive Simulacra of Human Behavior 
+# Generative Agents with configurable LLM
 
 <p align="center" width="100%">
 <img src="cover.png" alt="Smallville" style="width: 80%; min-width: 300px; display: block; margin: auto;">
 </p>
 
-This repository accompanies our research paper titled "[Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)." It contains our core simulation module for  generative agents—computational agents that simulate believable human behaviors—and their game environment. Below, we document the steps for setting up the simulation environment on your local machine and for replaying the simulation as a demo animation.
+This is a fork of the repository that accompanies the research paper titled "[Generative Agents: Interactive Simulacra of Human Behavior](https://arxiv.org/abs/2304.03442)." 
+
+The configures the generate agents simulation to run with various LLMs.
+
+In particular, using a local open source model, such as Llama2, has benefit given [the high cost of running simulations](https://twitter.com/NickADobos/status/1690790151503724544?s=20).
 
 ## <img src="https://joonsungpark.s3.amazonaws.com:443/static/assets/characters/profile/Isabella_Rodriguez.png" alt="Generative Isabella">   Setting Up the Environment 
-To set up your environment, you will need to generate a `utils.py` file that contains your OpenAI API key and download the necessary packages.
 
-### Step 1. Generate Utils File
+### Step 1. To run simulation locally, select an open source LLM of interest
+I use [Ollama](https://ollama.ai) for easy / quick setup:
+* [Download](https://ollama.ai/download)
+* Fetch a model, e.g., for `Llama-13b` run `ollama pull llama2:13b`
+* The code uses [LangChain's integration](https://python.langchain.com/docs/integrations/llms/ollama) for easy model-swapping
+ 
+LlamaCpp or GPT4All are other great options: 
+* Follow the steps linked [here](https://python.langchain.com/docs/use_cases/question_answering/how_to/local_retrieval_qa) for LangChain's integration
+
+The LLM is set at the top of `gpt_structure.py`.
+
+The rest of the steps follow what was mentioned in the origional repo:
+
+### Step 2. Generate Utils File
 In the `reverie/backend_server` folder (where `reverie.py` is located), create a new file titled `utils.py` and copy and paste the content below into the file:
 ```
-# Copy and paste your OpenAI API Key
-openai_api_key = "<Your OpenAI API>"
 # Put your name
 key_owner = "<Name>"
 
@@ -31,9 +45,18 @@ collision_block_id = "32125"
 # Verbose 
 debug = True
 ```
-Replace `<Your OpenAI API>` with your OpenAI API key, and `<name>` with your name.
+
+Suppply API keys for LLMs you want to test.
+
+Of course, for Llama2 or other OSS models running locally, you will not need a key.
+```
+# Copy and paste any API Keys for LLMs you want to test
+openai_api_key = "<Your OpenAI API>"
+anthropic_api_key = "<Your OpenAI API>"
+etc
+```
  
-### Step 2. Install requirements.txt
+### Step 3. Install requirements.txt
 Install everything listed in the `requirements.txt` file (I strongly recommend first setting up a virtualenv as usual). A note on Python version: we tested our environment on Python 3.9.12. 
 
 ## <img src="https://joonsungpark.s3.amazonaws.com:443/static/assets/characters/profile/Klaus_Mueller.png" alt="Generative Klaus">   Running a Simulation 
