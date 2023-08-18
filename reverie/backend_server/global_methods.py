@@ -208,7 +208,7 @@ def std(list_of_val):
   return std
 
 
-def copyanything(src, dst):
+def copyanything(src, dst, force=True):
   """
   Copy over everything in the src folder to dst folder. 
   ARGS:
@@ -218,6 +218,8 @@ def copyanything(src, dst):
     None
   """
   try:
+    if force and os.path.exists(dst):
+      shutil.rmtree(dst)
     shutil.copytree(src, dst)
   except OSError as exc: # python >2.5
     if exc.errno in (errno.ENOTDIR, errno.EINVAL):
