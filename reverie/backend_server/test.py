@@ -5,12 +5,13 @@ Modified: Ahmad Alkadri (ahmad.alkadri@outlook.com)
 Description: Wrapper functions for calling LLM.
 """
 
-import json
 import re
 import time
 from langchain.llms import Ollama
 from langchain.callbacks.manager import CallbackManager
 from langchain.callbacks.streaming_stdout import StreamingStdOutCallbackHandler
+from gpt4all import GPT4All, Embed4All
+import openai
 
 
 # *** Ollama (Llama2-13b) ***
@@ -54,6 +55,19 @@ def LLM_request(prompt):
         return "LLM ERROR"
     return response
 
+
+def openai_get_embedding(text, model="text-embedding-ada-002"):
+	text = text.replace("\n", " ")
+	print(text)
+	if not text:
+		text = "this is blank"
+	return openai.Embedding.create(input=[text], model=model)["data"][0]["embedding"]
+
+def llm_get_embedding(text):
+    text = text.replace("\n", " ")
+    embedder = Embed4All()
+    output = embedder.embed(text)
+    return output
 
 def catch_output(
     raw_prompt="""
