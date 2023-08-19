@@ -15,6 +15,7 @@ from global_methods import *
 from persona.prompt_template.run_gpt_prompt import *
 from persona.cognitive_modules.retrieve import *
 from persona.cognitive_modules.converse import *
+from persona.prompt_template.wake_up_hour import run_gpt_prompt_wake_up_hour
 
 ##############################################################################
 # CHAPTER 2: Generate
